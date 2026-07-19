@@ -28,13 +28,15 @@ class Patient(BaseModel):
 
     @computed_field
     @property
+    def bmi(self) -> float:
+        return round(self.weight / (self.height**2), 2)
+
+    @computed_field
+    @property
     def verdict(self) -> str:
-
-        bmi = round(self.weight / (self.height**2), 2)
-
-        if bmi < 18.5:
+        if self.bmi < 18.5:
             return "Underweight"
-        elif bmi < 25:
+        elif self.bmi < 25:
             return "Normal"
         else:
             return "Obese"
