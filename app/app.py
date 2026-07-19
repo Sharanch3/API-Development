@@ -2,8 +2,8 @@ import json
 from typing import Dict
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, Path, Query
-from schemas import Patient
+from fastapi import FastAPI, HTTPException, Path, Query, status
+from schemas import Patient, PatientInput
 
 app = FastAPI(
     title="Patient Management",
@@ -19,14 +19,19 @@ def load_data():
     return data
 
 
-@app.get("/patients", response_model=Dict[str, Patient], tags=["All patients"])
+def save_data(data):
+    with open("./patients.json", "w") as f:
+        json.dump(data, f, indent=4)
+
+
+@app.get("/patients", response_model=Dict[str, Patient], tags=["patient"])
 def fetch_all_records():
     data = load_data()
 
     return data
 
 
-@app.get("/patients/{patient_id}", response_model=Patient, tags=["Single patient"])
+@app.get("/patients/{patient_id}", response_model=Patient, tags=["patient"])
 def fetch_patient(
     patient_id: str = Path(
         examples=["P0001"], description="unique identifier of a patient"
@@ -41,7 +46,7 @@ def fetch_patient(
     raise HTTPException(status_code=404, detail="Patient record not Found")
 
 
-@app.get("/sort", response_model=Dict[str, Patient], tags=["Sorted data"])
+@app.get("/sort", response_model=Dict[str, Patient], tags=["patient"])
 def filter_patients(
     sort_by: str = Query(description="sort on the basis of height or weight"),
     asc: bool = Query(default=True, description="order of sorting"),
@@ -59,6 +64,26 @@ def filter_patients(
     raise HTTPException(
         status_code=400, detail="Invalid name choose either height or weight"
     )
+
+
+@app.post(
+    "/add_patient",
+    response_model=Dict[str, str],
+    tags=["patient"],
+    status_code=status.HTTP_201_CREATED,
+)
+def add_patient(request: PatientInput):
+
+    data = load_data()
+
+    if request.id in data:
+        raise HTTPException(status_code=400, detail="Patient record already exists.")
+
+    data[request.id] = request.model_dump(exclude=["id"])
+
+    save_data(data)
+
+    return {"message": "Successfully added."}
 
 
 if __name__ == "__main__":

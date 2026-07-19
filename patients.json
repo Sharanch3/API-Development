@@ -1,57 +1,62 @@
 {
-  "P0001": {
-    "id": "P0001",
-    "name": "Suraj",
-    "city": "Delhi",
-    "age": 21,
-    "gender": "male",
-    "height": 1.65,
-    "weight": 90.0,
-    "bmi": 33.06,
-    "verdict": "Obese"
-  },
-  "P0002": {
-    "id": "P0002",
-    "name": "Sanjana",
-    "city": "Kochi",
-    "age": 18,
-    "gender": "female",
-    "height": 1.60,
-    "weight": 52.0,
-    "bmi": 20.31,
-    "verdict": "Normal"
-  },
-  "P0003": {
-    "id": "P0003",
-    "name": "Rahul",
-    "city": "Mumbai",
-    "age": 27,
-    "gender": "male",
-    "height": 1.75,
-    "weight": 68.0,
-    "bmi": 22.20,
-    "verdict": "Normal"
-  },
-  "P0004": {
-    "id": "P0004",
-    "name": "Priya",
-    "city": "Bengaluru",
-    "age": 30,
-    "gender": "female",
-    "height": 1.62,
-    "weight": 74.0,
-    "bmi": 28.20,
-    "verdict": "Overweight"
-  },
-  "P0005": {
-    "id": "P0005",
-    "name": "Aman",
-    "city": "Jaipur",
-    "age": 25,
-    "gender": "male",
-    "height": 1.80,
-    "weight": 62.0,
-    "bmi": 19.14,
-    "verdict": "Normal"
-  }
+    "P0001": {
+        "name": "Suraj",
+        "city": "Delhi",
+        "age": 21,
+        "gender": "male",
+        "height": 1.65,
+        "weight": 90.0,
+        "bmi": 33.06,
+        "verdict": "Obese"
+    },
+    "P0002": {
+        "name": "Sanjana",
+        "city": "Kochi",
+        "age": 18,
+        "gender": "female",
+        "height": 1.6,
+        "weight": 52.0,
+        "bmi": 20.31,
+        "verdict": "Normal"
+    },
+    "P0003": {
+        "name": "Rahul",
+        "city": "Mumbai",
+        "age": 27,
+        "gender": "male",
+        "height": 1.75,
+        "weight": 68.0,
+        "bmi": 22.2,
+        "verdict": "Normal"
+    },
+    "P0004": {
+        "name": "Priya",
+        "city": "Bengaluru",
+        "age": 30,
+        "gender": "female",
+        "height": 1.62,
+        "weight": 74.0,
+        "bmi": 28.2,
+        "verdict": "Overweight"
+    },
+    "P0005": {
+        "name": "Aman",
+        "city": "Jaipur",
+        "age": 25,
+        "gender": "male",
+        "height": 1.8,
+        "weight": 62.0,
+        "bmi": 19.14,
+        "verdict": "Normal"
+    },
+    "P0006": {
+        "name": "Saru",
+        "city": "Canada",
+        "age": 21,
+        "gender": "female",
+        "weight": 56.0,
+        "height": 1.85,
+        "bmi": 16.36,
+        "verdict": "Underweight"
+    }
 }

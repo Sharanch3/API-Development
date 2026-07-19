@@ -40,3 +40,9 @@ class Patient(BaseModel):
             return "Normal"
         else:
             return "Obese"
+
+
+class PatientInput(Patient):
+    id: str = Field(
+        ..., description="Unique identifier of a patient", examples=["P0001"]
+    )
