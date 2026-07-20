@@ -1,12 +1,12 @@
 {
     "P0001": {
         "name": "Suraj",
-        "city": "WB",
+        "city": "Manglore",
         "age": 21,
         "gender": "male",
+        "weight": 70.0,
         "height": 1.65,
-        "weight": 50.0,
-        "bmi": 33.06,
+        "bmi": 25.71,
         "verdict": "Obese"
     },
     "P0002": {

@@ -104,15 +104,18 @@ def update_patient(
     if patient_id not in data:
         raise HTTPException(status_code=404, detail="patient id not found")
 
-    updated_data = patient.model_dump(exclude_unset=True)
+    updates = patient.model_dump(exclude_unset=True)
 
-    data[patient_id].update(updated_data)
+    data[patient_id].update(updates)
+
+    validated = PatientInput(id=patient_id, **data[patient_id])
+
+    data[patient_id] = validated.model_dump(exclude=["id"])
 
     save_data(data)
 
-    return {
-        'message': 'Patient updated successfully.'
-    }
+    return {"message": "Patient updated successfully"}
+
 
 
 if __name__ == "__main__":
