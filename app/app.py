@@ -117,6 +117,29 @@ def update_patient(
     return {"message": "Patient updated successfully"}
 
 
+@app.delete(
+    "/delete_patient/{patient_id}",
+    response_model=Dict[str, str],
+    status_code=status.HTTP_201_CREATED,
+    tags=["patients"],
+)
+def delete_patient(
+    patient_id: str = Path(
+        ..., description="unqiue identifier of a patient", examples=["P0001"]
+    ),
+):
+
+    data = load_data()
+
+    if patient_id not in data:
+        raise HTTPException(status_code=404, detail="patient not found")
+
+    del data[patient_id]
+
+    save_data(data)
+
+    return {"message": "successfully deleted."}
+
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000, log_level="info", reload=True)
