@@ -3,10 +3,10 @@ from typing import Dict
 
 import uvicorn
 from fastapi import FastAPI, HTTPException, Path, Query, status
-from schemas import Patient, PatientInput
+from schemas import Patient, PatientInput, PatientUpdate
 
 app = FastAPI(
-    title="Patient Management",
+    title="Patient Management System",
     description="Patients Record Management API",
     version="1.0.0",
 )
@@ -24,14 +24,14 @@ def save_data(data):
         json.dump(data, f, indent=4)
 
 
-@app.get("/patients", response_model=Dict[str, Patient], tags=["patient"])
+@app.get("/fetch_patients", response_model=Dict[str, Patient], tags=["patients"])
 def fetch_all_records():
     data = load_data()
 
     return data
 
 
-@app.get("/patients/{patient_id}", response_model=Patient, tags=["patient"])
+@app.get("/fetch_patient/{patient_id}", response_model=Patient, tags=["patients"])
 def fetch_patient(
     patient_id: str = Path(
         examples=["P0001"], description="unique identifier of a patient"
@@ -46,7 +46,7 @@ def fetch_patient(
     raise HTTPException(status_code=404, detail="Patient record not Found")
 
 
-@app.get("/sort", response_model=Dict[str, Patient], tags=["patient"])
+@app.get("/sort_patients", response_model=Dict[str, Patient], tags=["patients"])
 def filter_patients(
     sort_by: str = Query(description="sort on the basis of height or weight"),
     asc: bool = Query(default=True, description="order of sorting"),
@@ -69,7 +69,7 @@ def filter_patients(
 @app.post(
     "/add_patient",
     response_model=Dict[str, str],
-    tags=["patient"],
+    tags=["patients"],
     status_code=status.HTTP_201_CREATED,
 )
 def add_patient(request: PatientInput):
@@ -84,6 +84,35 @@ def add_patient(request: PatientInput):
     save_data(data)
 
     return {"message": "Successfully added."}
+
+
+@app.put(
+    "/update_patient/{patient_id}",
+    response_model=Dict[str, str],
+    tags=["patients"],
+    status_code=status.HTTP_200_OK,
+)
+def update_patient(
+    patient: PatientUpdate,
+    patient_id: str = Path(
+        ..., description="patient id to update the data", examples=["P0001"]
+    ),
+):
+
+    data = load_data()
+
+    if patient_id not in data:
+        raise HTTPException(status_code=404, detail="patient id not found")
+
+    updated_data = patient.model_dump(exclude_unset=True)
+
+    data[patient_id].update(updated_data)
+
+    save_data(data)
+
+    return {
+        'message': 'Patient updated successfully.'
+    }
 
 
 if __name__ == "__main__":
